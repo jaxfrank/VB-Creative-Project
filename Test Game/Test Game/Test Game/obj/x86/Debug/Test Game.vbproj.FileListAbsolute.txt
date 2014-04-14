@@ -1,0 +1,16 @@
+E:\VB\Games\Test Game\Test Game\Test Game\bin\x86\Debug\Test Game.exe
+E:\VB\Games\Test Game\Test Game\Test Game\bin\x86\Debug\Test Game.pdb
+E:\VB\Games\Test Game\Test Game\Test Game\bin\x86\Debug\Test Game.xml
+E:\VB\Games\Test Game\Test Game\Test Game\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+E:\VB\Games\Test Game\Test Game\Test Game\obj\x86\Debug\Test Game.exe
+E:\VB\Games\Test Game\Test Game\Test Game\obj\x86\Debug\Test Game.xml
+E:\VB\Games\Test Game\Test Game\Test Game\obj\x86\Debug\Test Game.pdb
+E:\VB\Games\Test Game\Test Game\Test Game\bin\x86\Debug\Content\terrain_atlas.xnb
+E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\terrain_atlas.xnb
+E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Test Game.exe
+E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Test Game.pdb
+E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Test Game.xml
+E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\obj\x86\Debug\Test Game.exe
+E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\obj\x86\Debug\Test Game.xml
+E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\obj\x86\Debug\Test Game.pdb

@@ -1,0 +1,2 @@
+E:\VB\Games\Test Game\Test Game\Test GameContent\obj\x86\Debug\Test GameContent.contentprojResolveAssemblyReference.cache
+E:\VB\VB-Creative-Project\Test Game\Test Game\Test GameContent\obj\x86\Debug\Test GameContent.contentprojResolveAssemblyReference.cache

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+TestGame
+</name>
+</assembly>
+<members>
+<member name="M:Test_Game.Main.Main(System.String[])">
+	<summary>
+ The main entry point for the application.
+ </summary>
+</member>
+</members>
+</doc>
