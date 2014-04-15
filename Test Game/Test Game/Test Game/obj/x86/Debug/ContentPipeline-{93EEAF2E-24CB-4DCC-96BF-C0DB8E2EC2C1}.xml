@@ -10,6 +10,15 @@
       <Output>E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\terrain_atlas.xnb</Output>
       <Time>2014-04-08T19:01:33.1587448-04:00</Time>
     </Item>
+    <Item>
+      <Source>terrain.png</Source>
+      <Name>terrain</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\terrain.xnb</Output>
+      <Time>2014-04-14T18:23:34.6686369-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{93EEAF2E-24CB-4DCC-96BF-C0DB8E2EC2C1}</ContentProjectGUID>

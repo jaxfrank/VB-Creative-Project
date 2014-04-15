@@ -1,1 +1,2 @@
 Content\terrain_atlas.xnb
+Content\terrain.xnb

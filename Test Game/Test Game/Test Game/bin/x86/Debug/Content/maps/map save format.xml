@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<tileset firstgid="1" name="name" tilewidth="pixels" tileheight="pixels">
+		<!-- Can be ignored for the most part-->
+		<image source="path" width="width in pixels" height="height in pixels"/> 
+		
+		<!-- begin ignoring -->
+		<terraintypes>
+			<terrain name="name" tile="center tile id?"/>
+		</terraintypes>
+		<!-- end ignoring -->
+		
+		<tile id="integer"/>
+		<tile id="">
+			<properties>
+				<property name="string" value="value"/>
+			</properties>
+		</tile>
+		
+	</tileset>
+	
+	<!-- Many layers from bottom most layer to top most layer -->
+	<layer name="name" width="width in tiles" height="height in tiles">
+		<!-- width * height tiles -->
+		<data>
+			<tile gid=""/>
+			<tile gid=""/>
+			<tile gid=""/>
+			<tile gid=""/>
+			<tile gid=""/>
+		</data>
+	</layer>
+</map>

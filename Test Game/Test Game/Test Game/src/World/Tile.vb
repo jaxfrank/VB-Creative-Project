@@ -1,15 +1,15 @@
 ﻿Public Class Tile
     Public Property textureIndex As Integer
-    Public Delegate Sub draw(spriteBatch As SpriteBatch, ByRef texture As Texture2D, ByVal x As Integer, ByVal y As Integer, ByVal textureWidth As Integer, ByVal textureHeight As Integer)
+    Public Delegate Sub DrawMethod(spriteBatch As SpriteBatch, ByRef texture As Texture2D, ByVal x As Integer, ByVal y As Integer, ByVal textureWidth As Integer, ByVal textureHeight As Integer)
 
-    Private renderMethod As draw
+    Private renderMethod As DrawMethod
 
     Public Sub New(ByVal textureIndex As Integer)
         Me.textureIndex = textureIndex
         renderMethod = AddressOf defaultDrawMethod
     End Sub
 
-    Public Sub New(ByVal textureIndex As Integer, ByVal renderMethod As draw)
+    Public Sub New(ByVal textureIndex As Integer, ByVal renderMethod As DrawMethod)
         Me.textureIndex = textureIndex
         Me.renderMethod = renderMethod
     End Sub

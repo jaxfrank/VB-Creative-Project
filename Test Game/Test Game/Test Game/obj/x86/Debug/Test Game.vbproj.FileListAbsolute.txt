@@ -14,3 +14,4 @@ E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\obj\x86\Debug\Microsoft.
 E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\obj\x86\Debug\Test Game.exe
 E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\obj\x86\Debug\Test Game.xml
 E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\obj\x86\Debug\Test Game.pdb
+E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\terrain.xnb

@@ -23,7 +23,7 @@ Public Class Game
         MyBase.Window.AllowUserResizing = True
         MyBase.IsMouseVisible = True
 
-        world = world.loadFromFile("maps/test")
+        world = world.loadFromFile("maps/testCSV2")
     End Sub
 
     Protected Overrides Sub LoadContent()
@@ -73,12 +73,12 @@ Public Class Game
         GraphicsDevice.Clear(Color.CornflowerBlue)
 
         Globals.spriteBatch.Begin()
-        'spriteBatch.Draw(texture, New Rectangle(0, 0, 1024, 1024), Color.White)
 
-        For i = 0 To 99
-            For j = 0 To 99
-                world.getTile(i, j, 0).render(Globals.spriteBatch, Resources.terrain, i + renderOffsetX, j + renderOffsetY)
-                'world.getTile(i, j, 1).render(Globals.spriteBatch, Resources.terrain, i + 5, j + 5)
+        For i = 0 To world.getWidth() - 1
+            For j = 0 To world.getHeight() - 1
+                For k = 0 To world.getDepth() - 1
+                    world.getTile(i, j, k).render(Globals.spriteBatch, Resources.terrain, i + renderOffsetX, j + renderOffsetY)
+                Next
             Next
         Next
 
