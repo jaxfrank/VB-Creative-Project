@@ -94,6 +94,7 @@
     <Compile Include="src\Input.vb" />
     <Compile Include="src\Main.vb" />
     <Compile Include="src\Game.vb" />
+    <Compile Include="src\Player.vb" />
     <Compile Include="src\Resources.vb" />
     <Compile Include="src\ScreenManager.vb" />
     <Compile Include="src\World\Tile.vb" />

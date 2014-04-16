@@ -20,7 +20,7 @@
 
     Public Sub defaultDrawMethod(spriteBatch As SpriteBatch, ByRef texture As Texture2D, ByVal x As Double, ByVal y As Double, Optional ByVal textureWidth As Integer = 32, Optional ByVal textureHeight As Integer = 32)
         If textureIndex >= 0 Then
-            Globals.spriteBatch.Draw(texture, New Rectangle(CInt(x * 32.0), CInt(y * 32.0), 32, 32), New Rectangle((textureIndex Mod 32) * 32, (textureIndex \ 32) * 32, 32, 32), Color.White)
+            Globals.spriteBatch.Draw(texture, New Rectangle(CInt(x * 32.0 * Globals.ZOOM_FACTOR), CInt(y * 32.0 * Globals.ZOOM_FACTOR), 32 * Globals.ZOOM_FACTOR, 32 * Globals.ZOOM_FACTOR), New Rectangle((textureIndex Mod 32) * 32, (textureIndex \ 32) * 32, 32, 32), Color.White)
         End If
     End Sub
 

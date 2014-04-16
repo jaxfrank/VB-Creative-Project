@@ -29,5 +29,16 @@
 			<tile gid=""/>
 			<tile gid=""/>
 		</data>
+		
+		<!-- Or -->
+		<data encoding="csv">
+			gid,gid,
+			gid,gid
+		</data>
+		
+		<!-- Or -->
+		<data encoding="base64">
+		LotsAndLotsOfLettersAndNumbersWhichHaveNoRealMeaningToYouOrIButStoreTheMapDataSomeHow
+		</data>
 	</layer>
 </map>

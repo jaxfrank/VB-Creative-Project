@@ -19,6 +19,33 @@
       <Output>E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\terrain.xnb</Output>
       <Time>2014-04-14T18:23:34.6686369-04:00</Time>
     </Item>
+    <Item>
+      <Source>george.png</Source>
+      <Name>george</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\george.xnb</Output>
+      <Time>2014-04-15T21:06:42.6427963-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Arial_8.spritefont</Source>
+      <Name>Arial_8</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\Arial_8.xnb</Output>
+      <Time>2014-04-15T22:09:08.9820747-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Georgia_16.spritefont</Source>
+      <Name>Georgia_16</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\Georgia_16.xnb</Output>
+      <Time>2014-04-15T22:09:08.9840748-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{93EEAF2E-24CB-4DCC-96BF-C0DB8E2EC2C1}</ContentProjectGUID>

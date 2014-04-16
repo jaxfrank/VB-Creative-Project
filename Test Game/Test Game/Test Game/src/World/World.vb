@@ -25,6 +25,9 @@ Public Class World
     End Function
 
     Public Function getTile(ByVal x As Integer, ByVal y As Integer, ByVal depth As Integer) As Tile
+        If x < 0 OrElse x > Me.width - 1 OrElse y < 0 OrElse y > Me.height - 1 OrElse depth < 0 OrElse depth > Me.depth - 1 Then
+            Return Nothing
+        End If
         Return tiles(x, y, depth)
     End Function
 
@@ -55,25 +58,27 @@ Public Class World
                                 tiles.Item(mapDepth - 1)(i Mod mapWidth, i \ mapHeight) = New Tile(CInt(gids(i)) - 1)
                             Next
                         Else
+                            'Code removed because it does not work
+                            'This code is here to handle Base64 data format
+                            '
+                            'Dim byteArray As Byte() = Convert.FromBase64String(element.Value)
 
-                            Dim byteArray As Byte() = Convert.FromBase64String(element.Value)
-
-                            ' const int gid = data[i] |
-                            '    data[i + 1] << 8 |
-                            '    data[i + 2] << 16 |
-                            '     data[i + 3] << 24;
-                            Dim textFile As StreamWriter = File.CreateText("testOutput" & mapDepth & ".txt")
-                            Dim currentLine As Integer = 0
-                            For i As Integer = 0 To mapWidth * mapHeight - 1
-                                Dim gid As Long = (byteArray(i * 4) Or (byteArray(i * 4 + 1) << 8) Or (byteArray(i * 4 + 2) << 16) Or (byteArray(i * 4 + 3) << 24)) - 1
-                                tiles.Item(mapDepth - 1)(i Mod mapWidth, i \ mapHeight) = New Tile(CInt(gid))
-                                If i \ mapHeight > currentLine Then
-                                    currentLine += 1
-                                    textFile.Write(vbNewLine)
-                                End If
-                                textFile.Write(gid)
-                                textFile.Write(",")
-                            Next
+                            '' const int gid = data[i] |
+                            ''    data[i + 1] << 8 |
+                            ''    data[i + 2] << 16 |
+                            ''     data[i + 3] << 24;
+                            'Dim textFile As StreamWriter = File.CreateText("testOutput" & mapDepth & ".txt")
+                            'Dim currentLine As Integer = 0
+                            'For i As Integer = 0 To mapWidth * mapHeight - 1
+                            '    Dim gid As Long = (byteArray(i * 4) Or (byteArray(i * 4 + 1) << 8) Or (byteArray(i * 4 + 2) << 16) Or (byteArray(i * 4 + 3) << 24)) - 1
+                            '    tiles.Item(mapDepth - 1)(i Mod mapWidth, i \ mapHeight) = New Tile(CInt(gid))
+                            '    If i \ mapHeight > currentLine Then
+                            '        currentLine += 1
+                            '        textFile.Write(vbNewLine)
+                            '    End If
+                            '    textFile.Write(gid)
+                            '    textFile.Write(",")
+                            'Next
                         End If
                     Else
                         Dim elements As XElement() = element.Element("data").Elements().ToArray()

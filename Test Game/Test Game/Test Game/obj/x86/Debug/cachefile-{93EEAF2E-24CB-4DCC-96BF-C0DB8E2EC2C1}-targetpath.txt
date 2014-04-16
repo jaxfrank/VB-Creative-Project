@@ -1,2 +1,5 @@
 Content\terrain_atlas.xnb
 Content\terrain.xnb
+Content\george.xnb
+Content\Arial_8.xnb
+Content\Georgia_16.xnb

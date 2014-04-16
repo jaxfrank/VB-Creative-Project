@@ -1,9 +1,6 @@
 Public Class Game
     Inherits Microsoft.Xna.Framework.Game
 
-    Private world As World
-    Private inputTimer As Double = 0
-    Private inputUpdated As Boolean = False
     Private renderOffsetX As Integer = 0
     Private renderOffsetY As Integer = 0
 
@@ -12,6 +9,9 @@ Public Class Game
 
     Public Sub New()
         Globals.graphicsDeviceManager = New GraphicsDeviceManager(Me)
+        Globals.graphicsDeviceManager.PreferredBackBufferHeight = 11 * 64
+        Globals.graphicsDeviceManager.PreferredBackBufferWidth = 11 * 64
+        Globals.graphicsDeviceManager.ApplyChanges()
         Globals.content = Me.Content
         Globals.content.RootDirectory = "Content"
     End Sub
@@ -20,10 +20,11 @@ Public Class Game
         Randomize()
 
         MyBase.Initialize()
-        MyBase.Window.AllowUserResizing = True
+        MyBase.Window.AllowUserResizing = False
         MyBase.IsMouseVisible = True
 
-        world = world.loadFromFile("maps/testCSV2")
+        Globals.currentWorld = World.loadFromFile("maps/testCSV2")
+        Globals.player = New Player()
     End Sub
 
     Protected Overrides Sub LoadContent()
@@ -43,29 +44,8 @@ Public Class Game
             Me.Exit()
         End If
 
-        If inputUpdated Then
-            inputTimer += gameTime.ElapsedGameTime.Milliseconds / 1000.0
-            If inputTimer > 0.05 Then
-                inputUpdated = False
-                inputTimer = 0
-            End If
-        Else
-            If Input.isKeyDown(Keys.W) Then
-                inputUpdated = True
-                renderOffsetY += 1
-            ElseIf Input.isKeyDown(Keys.S) Then
-                inputUpdated = True
-                renderOffsetY -= 1
-            End If
-            
-            If Input.isKeyDown(Keys.A) Then
-                inputUpdated = True
-                renderOffsetX += 1
-            ElseIf Input.isKeyDown(Keys.D) Then
-                inputUpdated = True
-                renderOffsetX -= 1
-            End If
-        End If
+        Globals.player.update(gameTime)
+
         MyBase.Update(gameTime)
     End Sub
 
@@ -74,14 +54,27 @@ Public Class Game
 
         Globals.spriteBatch.Begin()
 
-        For i = 0 To world.getWidth() - 1
-            For j = 0 To world.getHeight() - 1
-                For k = 0 To world.getDepth() - 1
-                    world.getTile(i, j, k).render(Globals.spriteBatch, Resources.terrain, i + renderOffsetX, j + renderOffsetY)
+        For i = Globals.player.posX - 10 To Globals.player.posX + 11
+            For j = Globals.player.posY - 10 To Globals.player.posY + 11
+                For k = 0 To Globals.currentWorld.getDepth() - 1
+                    Dim renderTile As Tile = Globals.currentWorld.getTile(i, j, k)
+                    'I hate VB so much
+                    'why have so many different ways of saying != and || and &&
+                    'also this is a double negative and since VB already has so many key words why don't
+                    'they just go ahead and make something(or better yet aThing) a keyword so you can say
+                    '
+                    'if VB is Something or VB is aThing then 
+                    '   commitSuicide()
+                    'end if
+                    If renderTile IsNot Nothing Then
+                        renderTile.render(Globals.spriteBatch, Resources.terrain, i - Globals.player.posX + Player.renderLocation, j - Globals.player.posY + Player.renderLocation)
+                    End If
                 Next
             Next
         Next
 
+        Globals.player.render(gameTime)
+        Globals.spriteBatch.DrawString(Resources.georgia_16, "X: " & Globals.player.posX & " Y: " & Globals.player.posY, New Vector2(0, 0), Color.Black)
         Globals.spriteBatch.End()
 
         MyBase.Draw(gameTime)
