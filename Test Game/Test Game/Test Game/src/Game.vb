@@ -23,7 +23,7 @@ Public Class Game
         MyBase.Window.AllowUserResizing = False
         MyBase.IsMouseVisible = True
 
-        Globals.currentWorld = World.loadFromFile("maps/testCSV2")
+        Globals.currentWorld = World.loadFromFile("maps/testWorld")
         Globals.player = New Player()
     End Sub
 

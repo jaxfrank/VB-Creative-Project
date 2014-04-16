@@ -25,19 +25,19 @@
         Else
             If Input.isKeyDown(Keys.W) Then
                 inputUpdated = True
-                posY -= 1
                 orientation = Direction.UP
+                If Not Globals.currentWorld.getCollision(posX, posY - 1) Then posY -= 1
             ElseIf Input.isKeyDown(Keys.S) Then
                 inputUpdated = True
-                posY += 1
+                If Not Globals.currentWorld.getCollision(posX, posY + 1) Then posY += 1
                 orientation = Direction.DOWN
             ElseIf Input.isKeyDown(Keys.A) Then
                 inputUpdated = True
-                posX -= 1
+                If Not Globals.currentWorld.getCollision(posX - 1, posY) Then posX -= 1
                 orientation = Direction.LEFT
             ElseIf Input.isKeyDown(Keys.D) Then
                 inputUpdated = True
-                posX += 1
+                If Not Globals.currentWorld.getCollision(posX + 1, posY) Then posX += 1
                 orientation = Direction.RIGHT
             End If
         End If
