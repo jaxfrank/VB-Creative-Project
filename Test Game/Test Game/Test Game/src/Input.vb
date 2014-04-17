@@ -1,8 +1,20 @@
 ﻿Public Class Input
-    Shared currentKeyState As KeyboardState
-    Shared previousKeyStare As KeyboardState
-    Shared currentMouseState As MouseState
-    Shared previouseMouseState As MouseState
+
+    'Begin keybinds
+    Public Shared DEBUG_KEY As Keys = Keys.F1
+    Public Shared NO_CLIP_KEY As Keys = Keys.N
+    Public Shared DRAW_COLLIDERS_KEY As Keys = Keys.C
+
+    Public Shared UP As Keys = Keys.W
+    Public Shared DOWN As Keys = Keys.S
+    Public Shared LEFT As Keys = Keys.A
+    Public Shared RIGHT As Keys = Keys.D
+    'End keybinds
+
+    Private Shared currentKeyState As KeyboardState
+    Private Shared previousKeyStare As KeyboardState
+    Private Shared currentMouseState As MouseState
+    Private Shared previouseMouseState As MouseState
 
     Public Shared Sub update()
         previousKeyStare = currentKeyState
@@ -13,6 +25,14 @@
 
     Public Shared Function isKeyDown(key As Keys) As Boolean
         Return currentKeyState.IsKeyDown(key)
+    End Function
+
+    Public Shared Function keyPressed(key As Keys) As Boolean
+        Return Not previousKeyStare.IsKeyDown(key) AndAlso currentKeyState.IsKeyDown(key)
+    End Function
+
+    Public Shared Function keyReleased(key As Keys) As Boolean
+        Return previousKeyStare.IsKeyDown(key) AndAlso Not currentKeyState.IsKeyDown(key)
     End Function
 
 End Class

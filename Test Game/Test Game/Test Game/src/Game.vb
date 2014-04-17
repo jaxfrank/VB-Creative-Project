@@ -40,8 +40,13 @@ Public Class Game
 
     Protected Overrides Sub Update(ByVal gameTime As GameTime)
         Input.update()
+        Util.newFrame()
         If Input.isKeyDown(Keys.Enter) Then
             Me.Exit()
+        End If
+
+        If Input.keyPressed(Input.DEBUG_KEY) Then
+            Globals.toggleDebugMode()
         End If
 
         Globals.currentWorld.update(gameTime)

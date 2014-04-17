@@ -3,20 +3,20 @@ Imports System.IO
 Imports System.Text
 
 Public Class World
-    Private standard_tiles As Dictionary(Of Integer, Tile)
+    'Private standard_tiles As Dictionary(Of Integer, Tile)
     Private tiles(,,) As Tile
     Private collision(,) As Boolean
     Private width As Integer
     Private height As Integer
     Private depth As Integer
 
-    Private Shared debugKey As Keys = Keys.F1
-    Private debugMode As Boolean = False
-    Private wasDebugKeyPressed As Boolean = False
+    Private drawColliders As Boolean = True
+    Private noClip As Boolean = False
 
     Public Sub New(ByVal width As Integer, ByVal height As Integer, ByVal depth As Integer)
         tiles = New Tile(width, height, depth) {}
         collision = New Boolean(width, height) {}
+        'Default the world to have no colliders
         For i As Integer = 0 To width
             For j As Integer = 0 To height
                 collision(i, j) = False
@@ -28,16 +28,19 @@ Public Class World
     End Sub
 
     Private Sub updateInput(ByVal gameTime As GameTime)
-        If Input.isKeyDown(debugKey) AndAlso Not wasDebugKeyPressed Then
-            debugMode = Not debugMode
-            wasDebugKeyPressed = True
-        ElseIf Not Input.isKeyDown(debugKey) AndAlso wasDebugKeyPressed Then
-            wasDebugKeyPressed = False
+        If Globals.inDebugMode() Then
+            If Input.keyReleased(Input.DRAW_COLLIDERS_KEY) And Input.isKeyDown(Keys.LeftControl) Then
+                drawColliders = Not drawColliders 'Toggle drawing colliders
+            End If
+            If Input.keyReleased(Input.NO_CLIP_KEY) And Input.isKeyDown(Keys.LeftControl) Then
+                noClip = Not noClip 'Toggle No Clip
+            End If
         End If
     End Sub
 
     Public Sub update(ByVal gameTime As GameTime)
         updateInput(gameTime)
+        noClip = noClip And Globals.inDebugMode() 'If and only if in debug mode keep noClip on
     End Sub
 
     Public Sub draw(ByVal gameTime As GameTime)
@@ -53,12 +56,12 @@ Public Class World
                     'if VB is Something or VB is aThing then 
                     '   commitSuicide()
                     'end if
-                    If renderTile IsNot Nothing Then
+                    If renderTile IsNot Nothing Then 'If the tile is within world bounds draw it
                         renderTile.render(Globals.spriteBatch, Resources.terrain, i - Globals.player.posX + Player.renderLocation, j - Globals.player.posY + Player.renderLocation)
                     End If
                 Next
 
-                If debugMode AndAlso getCollision(i, j) Then
+                If Globals.inDebugMode() AndAlso drawColliders AndAlso getCollision(i, j) Then
                     Dim x As Single = i - Globals.player.posX + Player.renderLocation
                     Dim y As Single = j - Globals.player.posY + Player.renderLocation
                     Globals.spriteBatch.Draw(Resources.collisionDebugTexture, New Rectangle(CInt(x * 32.0 * Globals.ZOOM_FACTOR), CInt(y * 32.0 * Globals.ZOOM_FACTOR), 32 * Globals.ZOOM_FACTOR, 32 * Globals.ZOOM_FACTOR), New Rectangle(0, 0, 32, 32), Color.White)
@@ -66,8 +69,10 @@ Public Class World
             Next
         Next
 
-        If debugMode Then
-            Globals.spriteBatch.DrawString(Resources.georgia_16, "X: " & Globals.player.posX & " Y: " & Globals.player.posY, New Vector2(0, 0), Color.White)
+        If Globals.inDebugMode() Then
+            Util.drawDebugText("X: " & Globals.player.posX & " Y: " & Globals.player.posY, Color.White)
+            If Not drawColliders Then Util.drawDebugText("Not Drawing Colliders", Color.White)
+            If noClip Then Util.drawDebugText("No Clip Enabled", Color.White)
         End If
     End Sub
 
@@ -98,9 +103,10 @@ Public Class World
 
     Public Function getCollision(ByVal x As Integer, ByVal y As Integer) As Boolean
         If x >= 0 AndAlso x < Me.width AndAlso y >= 0 AndAlso y < Me.height Then
-            Return Me.collision(x, y)
+            'I like this next like of code a lot.
+            Return Me.collision(x, y) AndAlso Not noClip 'if in noClip mode turn off the collider
         End If
-        Return True
+        Return True AndAlso Not noClip 'if in noClip mode turn off the collider
     End Function
 
     Public Function getWidth() As Integer

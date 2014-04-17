@@ -97,6 +97,7 @@
     <Compile Include="src\Player.vb" />
     <Compile Include="src\Resources.vb" />
     <Compile Include="src\ScreenManager.vb" />
+    <Compile Include="src\Util.vb" />
     <Compile Include="src\World\Tile.vb" />
     <Compile Include="src\World\World.vb" />
   </ItemGroup>

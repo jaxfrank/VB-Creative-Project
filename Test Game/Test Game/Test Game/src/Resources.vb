@@ -5,6 +5,7 @@
     Public Shared collisionDebugTexture As Texture2D
 
     Public Shared georgia_16 As SpriteFont
+    Public Shared debugModeFont As SpriteFont
 
     Public Shared Sub load()
         'Textures
@@ -14,6 +15,7 @@
 
         'Fonts
         georgia_16 = Globals.content.Load(Of SpriteFont)("Georgia_16")
+        debugModeFont = georgia_16
     End Sub
 
     Public Shared Sub unload()
