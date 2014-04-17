@@ -113,6 +113,28 @@
             Select Case key
                 Case Keys.Space
                     Return " "
+                Case Keys.OemMinus
+                    If shift Then Return "_" Else  : Return "-"
+                Case Keys.OemPlus
+                    If shift Then Return "+" Else  : Return "="
+                Case Keys.OemOpenBrackets
+                    If shift Then Return "{" Else  : Return "["
+                Case Keys.OemCloseBrackets
+                    If shift Then Return "}" Else  : Return "]"
+                Case Keys.OemSemicolon
+                    If shift Then Return ":" Else  : Return ";"
+                Case Keys.OemQuotes
+                    If shift Then Return """" Else  : Return "'"
+                Case Keys.OemComma
+                    If shift Then Return "<" Else  : Return ","
+                Case Keys.OemPeriod
+                    If shift Then Return ">" Else  : Return "."
+                Case Keys.OemQuestion
+                    If shift Then Return "?" Else  : Return "/"
+                Case Keys.OemPipe
+                    If shift Then Return "|" Else  : Return "\"
+                Case Keys.OemTilde
+                    If shift Then Return "~" Else  : Return "`"
             End Select
         End If
         Return ""
