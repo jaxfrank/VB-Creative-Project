@@ -44,37 +44,21 @@ Public Class Game
             Me.Exit()
         End If
 
+        Globals.currentWorld.update(gameTime)
         Globals.player.update(gameTime)
 
         MyBase.Update(gameTime)
     End Sub
 
     Protected Overrides Sub Draw(ByVal gameTime As GameTime)
-        GraphicsDevice.Clear(Color.CornflowerBlue)
+        GraphicsDevice.Clear(Color.Black)
 
         Globals.spriteBatch.Begin()
 
-        For i = Globals.player.posX - 10 To Globals.player.posX + 11
-            For j = Globals.player.posY - 10 To Globals.player.posY + 11
-                For k = 0 To Globals.currentWorld.getDepth() - 1
-                    Dim renderTile As Tile = Globals.currentWorld.getTile(i, j, k)
-                    'I hate VB so much
-                    'why have so many different ways of saying != and || and &&
-                    'also this is a double negative and since VB already has so many key words why don't
-                    'they just go ahead and make something(or better yet aThing) a keyword so you can say
-                    '
-                    'if VB is Something or VB is aThing then 
-                    '   commitSuicide()
-                    'end if
-                    If renderTile IsNot Nothing Then
-                        renderTile.render(Globals.spriteBatch, Resources.terrain, i - Globals.player.posX + Player.renderLocation, j - Globals.player.posY + Player.renderLocation)
-                    End If
-                Next
-            Next
-        Next
+        Globals.currentWorld.draw(gameTime)
 
         Globals.player.render(gameTime)
-        Globals.spriteBatch.DrawString(Resources.georgia_16, "X: " & Globals.player.posX & " Y: " & Globals.player.posY, New Vector2(0, 0), Color.Black)
+
         Globals.spriteBatch.End()
 
         MyBase.Draw(gameTime)

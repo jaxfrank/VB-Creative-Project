@@ -10,6 +10,10 @@ Public Class World
     Private height As Integer
     Private depth As Integer
 
+    Private Shared debugKey As Keys = Keys.F1
+    Private debugMode As Boolean = False
+    Private wasDebugKeyPressed As Boolean = False
+
     Public Sub New(ByVal width As Integer, ByVal height As Integer, ByVal depth As Integer)
         tiles = New Tile(width, height, depth) {}
         collision = New Boolean(width, height) {}
@@ -21,6 +25,50 @@ Public Class World
         Me.width = width
         Me.height = height
         Me.depth = depth
+    End Sub
+
+    Private Sub updateInput(ByVal gameTime As GameTime)
+        If Input.isKeyDown(debugKey) AndAlso Not wasDebugKeyPressed Then
+            debugMode = Not debugMode
+            wasDebugKeyPressed = True
+        ElseIf Not Input.isKeyDown(debugKey) AndAlso wasDebugKeyPressed Then
+            wasDebugKeyPressed = False
+        End If
+    End Sub
+
+    Public Sub update(ByVal gameTime As GameTime)
+        updateInput(gameTime)
+    End Sub
+
+    Public Sub draw(ByVal gameTime As GameTime)
+        For i = Globals.player.posX - 10 To Globals.player.posX + 11
+            For j = Globals.player.posY - 10 To Globals.player.posY + 11
+                For k = 0 To getDepth() - 1
+                    Dim renderTile As Tile = getTile(i, j, k)
+                    'I hate VB so much
+                    'why have so many different ways of saying != and || and &&
+                    'also this is a double negative and since VB already has so many key words why don't
+                    'they just go ahead and make something(or better yet aThing) a keyword so you can say
+                    '
+                    'if VB is Something or VB is aThing then 
+                    '   commitSuicide()
+                    'end if
+                    If renderTile IsNot Nothing Then
+                        renderTile.render(Globals.spriteBatch, Resources.terrain, i - Globals.player.posX + Player.renderLocation, j - Globals.player.posY + Player.renderLocation)
+                    End If
+                Next
+
+                If debugMode AndAlso getCollision(i, j) Then
+                    Dim x As Single = i - Globals.player.posX + Player.renderLocation
+                    Dim y As Single = j - Globals.player.posY + Player.renderLocation
+                    Globals.spriteBatch.Draw(Resources.collisionDebugTexture, New Rectangle(CInt(x * 32.0 * Globals.ZOOM_FACTOR), CInt(y * 32.0 * Globals.ZOOM_FACTOR), 32 * Globals.ZOOM_FACTOR, 32 * Globals.ZOOM_FACTOR), New Rectangle(0, 0, 32, 32), Color.White)
+                End If
+            Next
+        Next
+
+        If debugMode Then
+            Globals.spriteBatch.DrawString(Resources.georgia_16, "X: " & Globals.player.posX & " Y: " & Globals.player.posY, New Vector2(0, 0), Color.White)
+        End If
     End Sub
 
     Public Function setTile(ByVal x As Integer, ByVal y As Integer, ByVal depth As Integer, ByRef tile As Tile) As Boolean
@@ -52,7 +100,19 @@ Public Class World
         If x >= 0 AndAlso x < Me.width AndAlso y >= 0 AndAlso y < Me.height Then
             Return Me.collision(x, y)
         End If
-        Return False
+        Return True
+    End Function
+
+    Public Function getWidth() As Integer
+        Return width
+    End Function
+
+    Public Function getHeight() As Integer
+        Return height
+    End Function
+
+    Public Function getDepth() As Integer
+        Return depth
     End Function
 
     Public Shared Function loadFromFile(ByRef fileName As String) As World
@@ -142,18 +202,6 @@ Public Class World
             map.setCollision(collisionLayer)
         End If
         Return map
-    End Function
-
-    Public Function getWidth() As Integer
-        Return width
-    End Function
-
-    Public Function getHeight() As Integer
-        Return height
-    End Function
-
-    Public Function getDepth() As Integer
-        Return depth
     End Function
 
 End Class

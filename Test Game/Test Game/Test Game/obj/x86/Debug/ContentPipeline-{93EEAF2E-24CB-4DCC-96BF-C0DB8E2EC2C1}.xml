@@ -46,6 +46,15 @@
       <Output>E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\Georgia_16.xnb</Output>
       <Time>2014-04-15T22:09:08.9840748-04:00</Time>
     </Item>
+    <Item>
+      <Source>collision.png</Source>
+      <Name>collision</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\collision.xnb</Output>
+      <Time>2014-04-16T20:33:52.4352685-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{93EEAF2E-24CB-4DCC-96BF-C0DB8E2EC2C1}</ContentProjectGUID>
