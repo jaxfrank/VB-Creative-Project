@@ -4,8 +4,10 @@
     Public Shared WithEvents graphicsDeviceManager As GraphicsDeviceManager
     Public Shared WithEvents spriteBatch As SpriteBatch
 
+    Public Shared gamePaused As Boolean
     Public Shared currentWorld As World
     Public Shared player As Player
+    Public Shared commandLine As CommandLine
 
     Public Shared ZOOM_FACTOR As Integer = 1
 
@@ -23,5 +25,10 @@
     Public Shared Sub setDebugMode(ByVal debugMode As Boolean)
         Globals.debugMode = debugMode
     End Sub
+
+    Public Shared Function togglePause() As Boolean
+        gamePaused = Not gamePaused
+        Return gamePaused
+    End Function
 
 End Class

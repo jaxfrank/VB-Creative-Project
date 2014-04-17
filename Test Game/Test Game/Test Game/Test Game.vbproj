@@ -89,6 +89,7 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\CommandLine.vb" />
     <Compile Include="src\Globals.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="src\Input.vb" />

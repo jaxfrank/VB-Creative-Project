@@ -25,6 +25,8 @@ Public Class Game
 
         Globals.currentWorld = World.loadFromFile("maps/testWorld")
         Globals.player = New Player()
+        Globals.commandLine = New CommandLine()
+        Globals.commandLine.addCommand("tp", AddressOf handleTP)
     End Sub
 
     Protected Overrides Sub LoadContent()
@@ -41,17 +43,15 @@ Public Class Game
     Protected Overrides Sub Update(ByVal gameTime As GameTime)
         Input.update()
         Util.newFrame()
-        If Input.isKeyDown(Keys.Enter) Then
-            Me.Exit()
+        Globals.commandLine.update(gameTime)
+        If Not Globals.gamePaused Then
+            If Input.keyPressed(Input.DEBUG_KEY) Then
+                Globals.toggleDebugMode()
+            End If
+
+            Globals.currentWorld.update(gameTime)
+            Globals.player.update(gameTime)
         End If
-
-        If Input.keyPressed(Input.DEBUG_KEY) Then
-            Globals.toggleDebugMode()
-        End If
-
-        Globals.currentWorld.update(gameTime)
-        Globals.player.update(gameTime)
-
         MyBase.Update(gameTime)
     End Sub
 
@@ -64,9 +64,16 @@ Public Class Game
 
         Globals.player.render(gameTime)
 
+        Globals.commandLine.draw(gameTime)
+
         Globals.spriteBatch.End()
 
         MyBase.Draw(gameTime)
+    End Sub
+
+    Public Sub handleTP(ByRef parameters As String())
+        Globals.player.posX = CInt(parameters(0))
+        Globals.player.posY = CInt(parameters(1))
     End Sub
 
 End Class

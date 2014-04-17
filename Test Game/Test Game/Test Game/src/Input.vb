@@ -4,6 +4,7 @@
     Public Shared DEBUG_KEY As Keys = Keys.F1
     Public Shared NO_CLIP_KEY As Keys = Keys.N
     Public Shared DRAW_COLLIDERS_KEY As Keys = Keys.C
+    Public Shared COMMAND_LINE_KEY As Keys = Keys.T
 
     Public Shared UP As Keys = Keys.W
     Public Shared DOWN As Keys = Keys.S
@@ -33,6 +34,10 @@
 
     Public Shared Function keyReleased(key As Keys) As Boolean
         Return previousKeyStare.IsKeyDown(key) AndAlso Not currentKeyState.IsKeyDown(key)
+    End Function
+
+    Public Shared Function getPressedKeys() As Keys()
+        Return currentKeyState.GetPressedKeys()
     End Function
 
 End Class
