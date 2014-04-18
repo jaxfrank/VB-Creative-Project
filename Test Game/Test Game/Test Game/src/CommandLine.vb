@@ -14,7 +14,7 @@
         ElseIf Input.keyPressed(Keys.Escape) And open Then
             open = False
             currentCommand = ""
-            Globals.gamePaused = false
+            Globals.gamePaused = False
         ElseIf open Then
             For Each key As Keys In Input.getPressedKeys()
                 If Input.keyPressed(key) Then
@@ -50,8 +50,8 @@
         End If
     End Sub
 
-    Private Sub parse(ByRef command As String)
-        Dim tokens As String() = command.Split(" "c)
+    Public Sub parse(ByRef command As String)
+        Dim tokens As String() = Command.Split(" "c)
         Dim commandToken As String = tokens(0)
         If commands.ContainsKey(commandToken) Then
             Dim handler As CommandHandler = commands.Item(commandToken)

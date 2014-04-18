@@ -1,3 +1,5 @@
+Imports System.CodeDom
+
 Public Class Game
     Inherits Microsoft.Xna.Framework.Game
 
@@ -6,6 +8,8 @@ Public Class Game
 
     '1024 x 1024 32 x 32
     Private texture As Texture2D
+
+    Private runObj As New Object
 
     Public Sub New()
         Globals.graphicsDeviceManager = New GraphicsDeviceManager(Me)
@@ -27,6 +31,23 @@ Public Class Game
         Globals.player = New Player()
         Globals.commandLine = New CommandLine()
         Globals.commandLine.addCommand("tp", AddressOf handleTP)
+
+        Dim compiler As New Compiler()
+
+        Dim reader As New IO.StreamReader("Main.cs")
+
+        'Dim result As CodeDom.Compiler.CompilerResults = compiler.compileVB("Imports Test_Game" & vbCrLf & "Public Class Main" & vbCrLf & "Public Sub run()" & vbCrLf & "" & vbCrLf & "End Sub" & vbCrLf & "End Class")
+        'Dim result As CodeDom.Compiler.CompilerResults = compiler.compileCS(reader.ReadToEnd())
+        Dim result As CodeDom.Compiler.CompilerResults = compiler.compileCSFromFiles(New String() {"Main.cs", "TestClass.cs"})
+        reader.Close()
+
+        Util.log("Compiled code!")
+
+        For Each e As CodeDom.Compiler.CompilerError In result.Errors
+            Util.log(e.ErrorText)
+        Next
+
+        RunObj = result.CompiledAssembly.CreateInstance("Main")
     End Sub
 
     Protected Overrides Sub LoadContent()
@@ -41,6 +62,7 @@ Public Class Game
     End Sub
 
     Protected Overrides Sub Update(ByVal gameTime As GameTime)
+        runObj.run()
         Input.update()
         Util.newFrame()
         Globals.commandLine.update(gameTime)
