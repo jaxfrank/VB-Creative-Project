@@ -29,12 +29,6 @@ Public Class World
 
     Private Sub updateInput(ByVal gameTime As GameTime)
         If Globals.inDebugMode() Then
-            If Input.keyReleased(Input.DRAW_COLLIDERS_KEY) And Input.isKeyDown(Keys.LeftControl) Then
-                drawColliders = Not drawColliders 'Toggle drawing colliders
-            End If
-            If Input.keyReleased(Input.NO_CLIP_KEY) And Input.isKeyDown(Keys.LeftControl) Then
-                noClip = Not noClip 'Toggle No Clip
-            End If
         End If
     End Sub
 
@@ -108,6 +102,32 @@ Public Class World
         End If
         Return True AndAlso Not noClip 'if in noClip mode turn off the collider
     End Function
+
+    Public Function showingColliders() As Boolean
+        Return drawColliders
+    End Function
+
+    Public Function toggleShowColliders() As Boolean
+        drawColliders = Not drawColliders
+        Return drawColliders
+    End Function
+
+    Public Sub setShowColliders(val As Boolean)
+        drawColliders = val
+    End Sub
+
+    Public Function isNoClipEnabled() As Boolean
+        Return noClip
+    End Function
+
+    Public Function toggleNoClip() As Boolean
+        noClip = Not noClip
+        Return noClip
+    End Function
+
+    Public Sub setNoClip(val As Boolean)
+        noClip = val
+    End Sub
 
     Public Function getWidth() As Integer
         Return width

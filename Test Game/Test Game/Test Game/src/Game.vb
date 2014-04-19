@@ -9,8 +9,6 @@ Public Class Game
     '1024 x 1024 32 x 32
     Private texture As Texture2D
 
-    Private runObj As New Object
-
     Public Sub New()
         Globals.graphicsDeviceManager = New GraphicsDeviceManager(Me)
         Globals.graphicsDeviceManager.PreferredBackBufferHeight = 11 * 64
@@ -30,24 +28,13 @@ Public Class Game
         Globals.currentWorld = World.loadFromFile("maps/testWorld")
         Globals.player = New Player()
         Globals.commandLine = New CommandLine()
-        Globals.commandLine.addCommand("tp", AddressOf handleTP)
-
-        Dim compiler As New Compiler()
-
-        Dim reader As New IO.StreamReader("Main.cs")
-
-        'Dim result As CodeDom.Compiler.CompilerResults = compiler.compileVB("Imports Test_Game" & vbCrLf & "Public Class Main" & vbCrLf & "Public Sub run()" & vbCrLf & "" & vbCrLf & "End Sub" & vbCrLf & "End Class")
-        'Dim result As CodeDom.Compiler.CompilerResults = compiler.compileCS(reader.ReadToEnd())
-        Dim result As CodeDom.Compiler.CompilerResults = compiler.compileCSFromFiles(New String() {"Main.cs", "TestClass.cs"})
-        reader.Close()
-
-        Util.log("Compiled code!")
-
-        For Each e As CodeDom.Compiler.CompilerError In result.Errors
-            Util.log(e.ErrorText)
-        Next
-
-        RunObj = result.CompiledAssembly.CreateInstance("Main")
+        Globals.commandLine.addCommand("tp", "iib", AddressOf handleTP)
+        Globals.commandLine.addCommand("debug", "b", Sub(arguments As Object()) Globals.setDebugMode(CBool(arguments(0))))
+        Globals.commandLine.addCommand("debugT", Sub(arguments As Object()) Globals.toggleDebugMode())
+        Globals.commandLine.addCommand("noClip", "b", Sub(arguments As Object()) Globals.currentWorld.setNoClip(CBool(arguments(0))))
+        Globals.commandLine.addCommand("noClipT", Sub(arguments As Object()) Globals.currentWorld.toggleNoClip())
+        Globals.commandLine.addCommand("showColliders", "b", Sub(arguments As Object()) Globals.currentWorld.setShowColliders(CBool(arguments(0))))
+        Globals.commandLine.addCommand("showCollidersT", Sub(arguments As Object()) Globals.currentWorld.toggleShowColliders())
     End Sub
 
     Protected Overrides Sub LoadContent()
@@ -62,15 +49,10 @@ Public Class Game
     End Sub
 
     Protected Overrides Sub Update(ByVal gameTime As GameTime)
-        runObj.run()
         Input.update()
         Util.newFrame()
         Globals.commandLine.update(gameTime)
         If Not Globals.gamePaused Then
-            If Input.keyPressed(Input.DEBUG_KEY) Then
-                Globals.toggleDebugMode()
-            End If
-
             Globals.currentWorld.update(gameTime)
             Globals.player.update(gameTime)
         End If
@@ -93,9 +75,21 @@ Public Class Game
         MyBase.Draw(gameTime)
     End Sub
 
-    Public Sub handleTP(ByRef parameters As String())
-        Globals.player.posX = CInt(parameters(0))
-        Globals.player.posY = CInt(parameters(1))
+    Public Sub handleTP(parameters As Object())
+        Dim x As Integer = CInt(parameters(0))
+        Dim y As Integer = CInt(parameters(1))
+        Dim ignoreColliders As Boolean = CBool(parameters(2))
+        If ignoreColliders Then
+            Globals.player.posX = x
+            Globals.player.posY = y
+        Else
+            If Globals.currentWorld.getCollision(x, y) Then
+                Globals.commandLine.print("Invalid Teleport location")
+            Else
+                Globals.player.posX = x
+                Globals.player.posY = y
+            End If
+        End If
     End Sub
 
 End Class
