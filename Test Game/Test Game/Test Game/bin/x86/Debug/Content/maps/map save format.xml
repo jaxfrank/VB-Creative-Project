@@ -18,6 +18,11 @@
 		</tile>
 		
 	</tileset>
+	<!-- Contains a list of files which contain the code for the events -->
+	<events>
+		<!-- source is the file relative to the .exe and language is Either CSharp or VisualBasic however at this time it should only be VB -->
+		<event source="location" className="" langauge=""/> 
+	</events>
 	
 	<!-- Many layers from bottom most layer to top most layer -->
 	<layer name="name" width="width in tiles" height="height in tiles">
@@ -38,7 +43,7 @@
 		
 		<!-- Or -->
 		<data encoding="base64">
-		LotsAndLotsOfLettersAndNumbersWhichHaveNoRealMeaningToYouOrIButStoreTheMapDataSomeHow
+			LotsAndLotsOfLettersAndNumbersWhichHaveNoRealMeaningToYouOrMeButStoreTheMapDataSomeHow
 		</data>
 	</layer>
 </map>

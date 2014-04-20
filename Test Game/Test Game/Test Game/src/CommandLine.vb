@@ -27,7 +27,7 @@
                 If Input.keyPressed(key) Then
                     Select Case key
                         Case Keys.Enter
-                            parse(currentCommand)
+                            execute(currentCommand)
                             currentCommand = ""
                             'open = False
                         Case Keys.Back
@@ -57,7 +57,7 @@
         End If
     End Sub
 
-    Public Sub parse(command As String)
+    Public Sub execute(command As String)
         Dim tokens As New List(Of String)
         Dim workingCommand As String = command
         While workingCommand.Length() > 0

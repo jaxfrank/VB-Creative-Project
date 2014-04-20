@@ -2,7 +2,7 @@
 
     Public Shared terrain As Texture2D
     Public Shared playerTexture As Texture2D
-    Public Shared collisionDebugTexture As Texture2D
+    Public Shared debugTextures As Texture2D
 
     Public Shared georgia_16 As SpriteFont
     Public Shared debugModeFont As SpriteFont
@@ -11,7 +11,7 @@
         'Textures
         terrain = Globals.content.Load(Of Texture2D)("terrain")
         playerTexture = Globals.content.Load(Of Texture2D)("george")
-        collisionDebugTexture = Globals.content.Load(Of Texture2D)("collision")
+        debugTextures = Globals.content.Load(Of Texture2D)("debugTextures")
 
         'Fonts
         georgia_16 = Globals.content.Load(Of SpriteFont)("Georgia_16")

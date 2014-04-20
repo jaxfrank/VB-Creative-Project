@@ -1,8 +1,5 @@
 ﻿Public Class Globals
-
-    Public Sub New()
-
-    End Sub
+    Public Shared XNA_INSTALL_LOCATION As String = System.Environment.GetEnvironmentVariable("XNAGSv4")
 
     Public Shared content As ContentManager
     Public Shared WithEvents graphicsDeviceManager As GraphicsDeviceManager

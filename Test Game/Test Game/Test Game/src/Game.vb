@@ -25,16 +25,19 @@ Public Class Game
         MyBase.Window.AllowUserResizing = False
         MyBase.IsMouseVisible = True
 
-        Globals.currentWorld = World.loadFromFile("maps/testWorld")
-        Globals.player = New Player()
         Globals.commandLine = New CommandLine()
-        Globals.commandLine.addCommand("tp", "iib", AddressOf handleTP)
+        Globals.commandLine.addCommand("tp", "ii", AddressOf tp)
         Globals.commandLine.addCommand("debug", "b", Sub(arguments As Object()) Globals.setDebugMode(CBool(arguments(0))))
         Globals.commandLine.addCommand("debugT", Sub(arguments As Object()) Globals.toggleDebugMode())
         Globals.commandLine.addCommand("noClip", "b", Sub(arguments As Object()) Globals.currentWorld.setNoClip(CBool(arguments(0))))
         Globals.commandLine.addCommand("noClipT", Sub(arguments As Object()) Globals.currentWorld.toggleNoClip())
         Globals.commandLine.addCommand("showColliders", "b", Sub(arguments As Object()) Globals.currentWorld.setShowColliders(CBool(arguments(0))))
         Globals.commandLine.addCommand("showCollidersT", Sub(arguments As Object()) Globals.currentWorld.toggleShowColliders())
+        Globals.commandLine.addCommand("showEvents", "b", Sub(arguments As Object()) Globals.currentWorld.setShowEvents(CBool(arguments(0))))
+        Globals.commandLine.addCommand("showEventsT", Sub(arguments As Object()) Globals.currentWorld.toggleShowEvents())
+
+        Globals.currentWorld = World.loadFromFile("maps/testWorld")
+        Globals.player = New Player()
     End Sub
 
     Protected Overrides Sub LoadContent()
@@ -75,20 +78,14 @@ Public Class Game
         MyBase.Draw(gameTime)
     End Sub
 
-    Public Sub handleTP(parameters As Object())
+    Public Sub tp(parameters As Object())
         Dim x As Integer = CInt(parameters(0))
         Dim y As Integer = CInt(parameters(1))
-        Dim ignoreColliders As Boolean = CBool(parameters(2))
-        If ignoreColliders Then
+        If Globals.currentWorld.getCollision(x, y) Then
+            Globals.commandLine.print("Invalid Teleport location")
+        Else
             Globals.player.posX = x
             Globals.player.posY = y
-        Else
-            If Globals.currentWorld.getCollision(x, y) Then
-                Globals.commandLine.print("Invalid Teleport location")
-            Else
-                Globals.player.posX = x
-                Globals.player.posY = y
-            End If
         End If
     End Sub
 

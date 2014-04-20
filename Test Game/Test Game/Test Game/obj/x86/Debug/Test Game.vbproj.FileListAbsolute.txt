@@ -18,4 +18,4 @@ E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\te
 E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\george.xnb
 E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\Arial_8.xnb
 E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\Georgia_16.xnb
-E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\collision.xnb
+E:\VB\VB-Creative-Project\Test Game\Test Game\Test Game\bin\x86\Debug\Content\debugTextures.xnb

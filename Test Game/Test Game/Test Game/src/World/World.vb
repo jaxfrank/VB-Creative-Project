@@ -6,11 +6,14 @@ Public Class World
     'Private standard_tiles As Dictionary(Of Integer, Tile)
     Private tiles(,,) As Tile
     Private collision(,) As Boolean
+    Private events As New List(Of WorldEvent)
+
     Private width As Integer
     Private height As Integer
     Private depth As Integer
 
     Private drawColliders As Boolean = True
+    Private drawEvents As Boolean = True
     Private noClip As Boolean = False
 
     Public Sub New(ByVal width As Integer, ByVal height As Integer, ByVal depth As Integer)
@@ -35,6 +38,13 @@ Public Class World
     Public Sub update(ByVal gameTime As GameTime)
         updateInput(gameTime)
         noClip = noClip And Globals.inDebugMode() 'If and only if in debug mode keep noClip on
+
+        For Each e As WorldEvent In events
+            If e.condition(e.x, e.y) Then
+                e.handler(e.x, e.y)
+            End If
+        Next
+
     End Sub
 
     Public Sub draw(ByVal gameTime As GameTime)
@@ -58,7 +68,7 @@ Public Class World
                 If Globals.inDebugMode() AndAlso drawColliders AndAlso getCollision(i, j) Then
                     Dim x As Single = i - Globals.player.posX + Player.renderLocation
                     Dim y As Single = j - Globals.player.posY + Player.renderLocation
-                    Globals.spriteBatch.Draw(Resources.collisionDebugTexture, New Rectangle(CInt(x * 32.0 * Globals.ZOOM_FACTOR), CInt(y * 32.0 * Globals.ZOOM_FACTOR), 32 * Globals.ZOOM_FACTOR, 32 * Globals.ZOOM_FACTOR), New Rectangle(0, 0, 32, 32), Color.White)
+                    Globals.spriteBatch.Draw(Resources.debugTextures, New Rectangle(CInt(x * 32.0 * Globals.ZOOM_FACTOR), CInt(y * 32.0 * Globals.ZOOM_FACTOR), 32 * Globals.ZOOM_FACTOR, 32 * Globals.ZOOM_FACTOR), New Rectangle(0, 0, 32, 32), Color.White)
                 End If
             Next
         Next
@@ -67,6 +77,17 @@ Public Class World
             Util.drawDebugText("X: " & Globals.player.posX & " Y: " & Globals.player.posY, Color.White)
             If Not drawColliders Then Util.drawDebugText("Not Drawing Colliders", Color.White)
             If noClip Then Util.drawDebugText("No Clip Enabled", Color.White)
+
+            If drawEvents Then
+                For Each e As WorldEvent In events
+                    Dim x As Single = e.x - Globals.player.posX + Player.renderLocation
+                    Dim y As Single = e.y - Globals.player.posY + Player.renderLocation
+                    Globals.spriteBatch.Draw(Resources.debugTextures, New Rectangle(CInt(x * 32.0 * Globals.ZOOM_FACTOR), CInt(y * 32.0 * Globals.ZOOM_FACTOR), 32 * Globals.ZOOM_FACTOR, 32 * Globals.ZOOM_FACTOR), New Rectangle(32, 0, 32, 32), Color.White)
+                Next
+            Else
+                Util.drawDebugText("Not Drawing Events", Color.White)
+            End If
+
         End If
     End Sub
 
@@ -102,6 +123,27 @@ Public Class World
         End If
         Return True AndAlso Not noClip 'if in noClip mode turn off the collider
     End Function
+
+    Public Sub addEvent(e As WorldEvent)
+        Me.events.Add(e)
+    End Sub
+
+    Public Sub addEvents(e As WorldEvent())
+        Me.events.AddRange(e)
+    End Sub
+
+    Public Function showingEvents() As Boolean
+        Return drawEvents
+    End Function
+
+    Public Function toggleShowEvents() As Boolean
+        drawEvents = Not drawEvents
+        Return drawEvents
+    End Function
+
+    Public Sub setShowEvents(val As Boolean)
+        drawEvents = val
+    End Sub
 
     Public Function showingColliders() As Boolean
         Return drawColliders
@@ -145,6 +187,7 @@ Public Class World
         Dim mapWidth As Integer
         Dim mapHeight As Integer
         Dim tiles As New List(Of Tile(,))
+        Dim eventElements As New List(Of XElement)
         Dim collisionLayer As Boolean(,) = Nothing
         Dim document As XDocument = XDocument.Load(Globals.content.RootDirectory & "/" & fileName & ".tmx")
         Dim mapElement As XElement = document.Element("map")
@@ -184,28 +227,6 @@ Public Class World
                                 For i As Integer = 0 To mapWidth * mapHeight - 1
                                     tiles.Item(mapDepth - 1)(i Mod mapWidth, i \ mapHeight) = New Tile(CInt(gids(i)) - 1)
                                 Next
-                            Else
-                                'Code removed because it does not work
-                                'This code is here to handle Base64 data format
-                                '
-                                'Dim byteArray As Byte() = Convert.FromBase64String(element.Value)
-
-                                '' const int gid = data[i] |
-                                ''    data[i + 1] << 8 |
-                                ''    data[i + 2] << 16 |
-                                ''     data[i + 3] << 24;
-                                'Dim textFile As StreamWriter = File.CreateText("testOutput" & mapDepth & ".txt")
-                                'Dim currentLine As Integer = 0
-                                'For i As Integer = 0 To mapWidth * mapHeight - 1
-                                '    Dim gid As Long = (byteArray(i * 4) Or (byteArray(i * 4 + 1) << 8) Or (byteArray(i * 4 + 2) << 16) Or (byteArray(i * 4 + 3) << 24)) - 1
-                                '    tiles.Item(mapDepth - 1)(i Mod mapWidth, i \ mapHeight) = New Tile(CInt(gid))
-                                '    If i \ mapHeight > currentLine Then
-                                '        currentLine += 1
-                                '        textFile.Write(vbNewLine)
-                                '    End If
-                                '    textFile.Write(gid)
-                                '    textFile.Write(",")
-                                'Next
                             End If
                         Else
                             Dim elements As XElement() = element.Element("data").Elements().ToArray()
@@ -214,6 +235,10 @@ Public Class World
                             Next
                         End If
                     End If
+                Case "events"
+                    For Each eventElement As XElement In element.Elements()
+                        eventElements.Add(eventElement)
+                    Next
             End Select
         Next
         Dim map As World = New World(mapWidth, mapHeight, mapDepth)
@@ -227,6 +252,47 @@ Public Class World
         If collisionLayer IsNot Nothing Then
             map.setCollision(collisionLayer)
         End If
+        If eventElements.Count() > 0 Then
+            Dim compiler As New Compiler()
+            Dim language As String
+            Dim className As String
+            Dim location As String
+            Dim output As CodeDom.Compiler.CompilerResults
+            Dim reader As IO.StreamReader
+            For Each eventElement As XElement In eventElements
+                className = New String(eventElement.Attribute("className").Value.ToCharArray())
+                language = New String(eventElement.Attribute("language").Value.ToCharArray())
+                location = New String(eventElement.Attribute("source").Value.ToCharArray())
+
+                compiler.cp.MainClass = className
+                compiler.cp.OutputAssembly = className & ".dll"
+                reader = New IO.StreamReader(location)
+
+                Select Case language
+                    Case "CSharp"
+                        output = compiler.compileCS(reader.ReadToEnd())
+                    Case "VisualBasic"
+                        output = compiler.compileVB(reader.ReadToEnd())
+                    Case Else
+                        Util.log("Invalid language at event '" & className & "'")
+                        Continue For
+                End Select
+                Util.log("Compiling " & className)
+                For Each e As CodeDom.Compiler.CompilerError In output.Errors
+                    Util.log(location & "(" & e.Line & "," & e.Column & "): error " & e.ErrorNumber & ": " & e.ErrorText)
+                Next
+
+                If output.Errors.HasErrors() Then
+                    Util.log("Compilation failed")
+                    Continue For
+                Else
+                    Util.log("Compilation successful")
+                End If
+                Dim obj As Object = output.CompiledAssembly.CreateInstance(className)
+                obj.addEvents(map)
+            Next
+        End If
+
         Return map
     End Function
 

@@ -93,6 +93,7 @@
     <Compile Include="src\Compiler.vb" />
     <Compile Include="src\Globals.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="src\IWorldEventLoaderVB.vb" />
     <Compile Include="src\Input.vb" />
     <Compile Include="src\Main.vb" />
     <Compile Include="src\Game.vb" />
@@ -102,6 +103,7 @@
     <Compile Include="src\Util.vb" />
     <Compile Include="src\World\Tile.vb" />
     <Compile Include="src\World\World.vb" />
+    <Compile Include="src\World\WorldEvent.vb" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

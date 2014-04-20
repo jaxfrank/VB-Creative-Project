@@ -63,8 +63,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="collision.png">
-      <Name>collision</Name>
+    <Compile Include="debugTextures.png">
+      <Name>debugTextures</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
