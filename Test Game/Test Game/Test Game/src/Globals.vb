@@ -6,6 +6,7 @@
     Public Shared WithEvents spriteBatch As SpriteBatch
 
     Public Shared gamePaused As Boolean
+    Public Shared pathFinder As PathFinder
     Public Shared currentWorld As World
     Public Shared player As Player
     Public Shared commandLine As CommandLine

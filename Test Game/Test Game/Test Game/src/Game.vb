@@ -8,6 +8,7 @@ Public Class Game
 
     '1024 x 1024 32 x 32
     Private texture As Texture2D
+    Private testPath As Path
 
     Public Sub New()
         Globals.graphicsDeviceManager = New GraphicsDeviceManager(Me)
@@ -16,6 +17,7 @@ Public Class Game
         Globals.graphicsDeviceManager.ApplyChanges()
         Globals.content = Me.Content
         Globals.content.RootDirectory = "Content"
+        Console.WriteLine("This is interesting")
     End Sub
 
     Protected Overrides Sub Initialize()
@@ -38,6 +40,9 @@ Public Class Game
 
         Globals.currentWorld = World.loadFromFile("maps/testWorld")
         Globals.player = New Player()
+        Globals.pathFinder = New PathFinder()
+        Me.testPath = Globals.pathFinder.findPath(New Point(0, 0), New Point(29, 29))
+        Util.log(CStr(testPath.length()))
     End Sub
 
     Protected Overrides Sub LoadContent()
@@ -68,6 +73,12 @@ Public Class Game
         Globals.spriteBatch.Begin()
 
         Globals.currentWorld.draw(gameTime)
+
+        For Each p As Point In testPath.getNodes()
+            Dim x As Single = p.X - Globals.player.posX + Player.renderLocation
+            Dim y As Single = p.Y - Globals.player.posY + Player.renderLocation
+            Globals.spriteBatch.Draw(Resources.debugTextures, New Rectangle(CInt(x * 32.0 * Globals.ZOOM_FACTOR), CInt(y * 32.0 * Globals.ZOOM_FACTOR), 32 * Globals.ZOOM_FACTOR, 32 * Globals.ZOOM_FACTOR), New Rectangle(64, 0, 32, 32), Color.White)
+        Next
 
         Globals.player.render(gameTime)
 
