@@ -205,7 +205,8 @@
         If key >= Keys.A AndAlso key <= Keys.Z Then
             If shift Then
                 Return key.ToString()
-            Else : Return key.ToString().ToLower()
+            Else
+                Return key.ToString().ToLower()
             End If
         ElseIf key >= Keys.NumPad0 AndAlso key <= Keys.NumPad9 Then
             Return CInt(key - Keys.NumPad0).ToString()
