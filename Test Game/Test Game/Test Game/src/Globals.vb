@@ -7,9 +7,9 @@
 
     Public Shared gamePaused As Boolean
     Public Shared pathFinder As PathFinder
-    Public Shared currentWorld As World
     Public Shared player As Player
     Public Shared commandLine As CommandLine
+    Public Shared screenManager As ScreenManager
 
     Public Shared ZOOM_FACTOR As Integer = 1
 

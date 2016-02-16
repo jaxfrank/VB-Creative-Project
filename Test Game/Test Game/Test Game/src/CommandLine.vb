@@ -65,6 +65,11 @@
             workingCommand = result.Item2
             tokens.Add(result.Item1)
         End While
+
+        If tokens.Count = 0 Then
+            Return
+        End If
+
         Dim commandName As String = tokens(0)
         tokens.RemoveRange(0, 1)
         If Not commands.ContainsKey(commandName) Then

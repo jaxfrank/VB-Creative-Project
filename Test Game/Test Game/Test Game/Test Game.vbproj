@@ -109,8 +109,12 @@
     <Compile Include="src\Game.vb" />
     <Compile Include="src\Player.vb" />
     <Compile Include="src\Resources.vb" />
-    <Compile Include="src\ScreenManager.vb" />
+    <Compile Include="src\Screen\Screen.vb" />
+    <Compile Include="src\Screen\ScreenManager.vb" />
+    <Compile Include="src\Screen\Screens\ScreenMainMenu.vb" />
+    <Compile Include="src\Screen\Screens\ScreenWorld.vb" />
     <Compile Include="src\Util.vb" />
+    <Compile Include="src\World\Entity\Entity.vb" />
     <Compile Include="src\World\Pathfinding\Path.vb" />
     <Compile Include="src\World\Pathfinding\PathFinder.vb" />
     <Compile Include="src\World\Pathfinding\PathNode.vb" />

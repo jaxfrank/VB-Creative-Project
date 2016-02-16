@@ -435,6 +435,9 @@
  <tileset firstgid="1025" name="Collision" tilewidth="32" tileheight="32">
   <image source="../../../../../../Test GameContent/res/textures/collision.png" width="32" height="32"/>
  </tileset>
+ <events>
+	<event source="scripts/EventLoader.vb" className="EventLoader" language="VisualBasic"/>
+ </events>
  <layer name="Base" width="30" height="30">
   <data encoding="csv">
 293,293,293,293,293,355,355,355,355,354,293,355,354,353,293,353,353,354,293,353,353,354,355,353,293,355,355,355,355,355,
@@ -605,7 +608,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer name="_collision" width="30" height="30">
+ <layer name="_collision" width="30" height="30" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

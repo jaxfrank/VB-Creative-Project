@@ -15,7 +15,7 @@
         posY = 0
     End Sub
 
-    Private Sub updateInput(ByVal gameTime As GameTime)
+    Private Sub updateInput(ByVal gameTime As GameTime, ByRef world As World)
         If inputUpdated Then
             inputTimer += gameTime.ElapsedGameTime.Milliseconds / 1000.0
             If inputTimer > 0.05 Then
@@ -26,25 +26,25 @@
             If Input.isKeyDown(Input.UP) Then
                 inputUpdated = True
                 orientation = Direction.UP
-                If Not Globals.currentWorld.getCollision(posX, posY - 1) Then posY -= 1
+                If Not world.getCollision(posX, posY - 1) Then posY -= 1
             ElseIf Input.isKeyDown(Input.DOWN) Then
                 inputUpdated = True
-                If Not Globals.currentWorld.getCollision(posX, posY + 1) Then posY += 1
+                If Not world.getCollision(posX, posY + 1) Then posY += 1
                 orientation = Direction.DOWN
             ElseIf Input.isKeyDown(Input.LEFT) Then
                 inputUpdated = True
-                If Not Globals.currentWorld.getCollision(posX - 1, posY) Then posX -= 1
+                If Not world.getCollision(posX - 1, posY) Then posX -= 1
                 orientation = Direction.LEFT
             ElseIf Input.isKeyDown(Input.RIGHT) Then
                 inputUpdated = True
-                If Not Globals.currentWorld.getCollision(posX + 1, posY) Then posX += 1
+                If Not world.getCollision(posX + 1, posY) Then posX += 1
                 orientation = Direction.RIGHT
             End If
         End If
     End Sub
 
-    Public Sub update(ByVal gameTime As GameTime)
-        updateInput(gameTime)
+    Public Sub update(ByVal gameTime As GameTime, ByRef world As World)
+        updateInput(gameTime, World)
     End Sub
 
     Public Sub render(ByVal gameTime As GameTime)

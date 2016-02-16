@@ -1,7 +1,7 @@
 ﻿Public Class Input
 
     'Begin keybinds
-    Public Shared COMMAND_LINE_KEY As Keys = Keys.T
+    Public Shared COMMAND_LINE_KEY As Keys = Keys.OemTilde
 
     Public Shared UP As Keys = Keys.W
     Public Shared DOWN As Keys = Keys.S

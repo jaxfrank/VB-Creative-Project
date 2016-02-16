@@ -9,7 +9,7 @@ Public Class EventLoader
     End Sub
 
     Function playerAtLocation(x As Integer, y As Integer) As Boolean
-        Return Globals.player.posX = x And Globals.player.posY = y And Test_Game.Input.keyPressed(Keys.E)
+        Return Globals.player.posX = x AndAlso Globals.player.posY = y AndAlso Test_Game.Input.keyPressed(Keys.E)
     End Function
 
     Sub teleport(x As Integer, y As Integer)

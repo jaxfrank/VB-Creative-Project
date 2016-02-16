@@ -7,6 +7,7 @@ Public Class World
     Private tiles(,,) As Tile
     Private collision(,) As Boolean
     Private events As New List(Of WorldEvent)
+    Private pathFinder As New PathFinder
 
     Private width As Integer
     Private height As Integer
@@ -181,6 +182,10 @@ Public Class World
 
     Public Function getDepth() As Integer
         Return depth
+    End Function
+
+    Public Function getPathFinder() As PathFinder
+        Return pathFinder
     End Function
 
     Public Shared Function loadFromFile(ByRef fileName As String) As World

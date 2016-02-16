@@ -9,7 +9,7 @@ Public Class PathFinder
     Dim startPoint As Point
     Dim endPoint As Point
 
-    Public Function findPath(startPoint As Point, endPoint As Point) As Path
+    Public Function findPath(ByRef world As World, startPoint As Point, endPoint As Point) As Path
         Me.startPoint = startPoint
         Dim openList As New List(Of PathNode)
         Dim closedList As New List(Of PathNode)
@@ -36,7 +36,7 @@ Public Class PathFinder
             openList.RemoveAt(0)
             closedList.Add(currentNode)
 
-            Dim adjacentNodes As PathNode() = getAdjacentNodes(currentNode.mapPosition, endPoint)
+            Dim adjacentNodes As PathNode() = getAdjacentNodes(world, currentNode.mapPosition, endPoint)
             For Each adjacent As PathNode In adjacentNodes
                 If Not closedList.Contains(adjacent, pathNodeEqualityComparer) Then
                     If Not openList.Contains(adjacent, pathNodeEqualityComparer) Then
@@ -83,9 +83,9 @@ Public Class PathFinder
         Return New Path(pathList.ToArray())
     End Function
 
-    Private Function getAdjacentNodes(position As Point, endPoint As Point) As PathNode()
+    Private Function getAdjacentNodes(ByRef world As World, position As Point, endPoint As Point) As PathNode()
         Dim nodes As New List(Of PathNode)
-        If Not Globals.currentWorld.getCollision(position.X - 1, position.Y) Then
+        If Not world.getCollision(position.X - 1, position.Y) Then
             Dim location As New Point(position.X - 1, position.Y)
             nodes.Add(New PathNode With {
                       .h_hueristic = calculateHeuristic(location, endPoint),
@@ -93,7 +93,7 @@ Public Class PathFinder
                       .f_totalCost = .g_movementCost + .h_hueristic,
                       .mapPosition = location})
         End If
-        If Not Globals.currentWorld.getCollision(position.X + 1, position.Y) Then
+        If Not world.getCollision(position.X + 1, position.Y) Then
             Dim location As New Point(position.X + 1, position.Y)
             nodes.Add(New PathNode With {
                       .h_hueristic = calculateHeuristic(location, endPoint),
@@ -101,7 +101,7 @@ Public Class PathFinder
                       .f_totalCost = .g_movementCost + .h_hueristic,
                       .mapPosition = location})
         End If
-        If Not Globals.currentWorld.getCollision(position.X, position.Y - 1) Then
+        If Not world.getCollision(position.X, position.Y - 1) Then
             Dim location As New Point(position.X, position.Y - 1)
             nodes.Add(New PathNode With {
                       .h_hueristic = calculateHeuristic(location, endPoint),
@@ -109,7 +109,7 @@ Public Class PathFinder
                       .f_totalCost = .g_movementCost + .h_hueristic,
                       .mapPosition = location})
         End If
-        If Not Globals.currentWorld.getCollision(position.X, position.Y + 1) Then
+        If Not world.getCollision(position.X, position.Y + 1) Then
             Dim location As New Point(position.X, position.Y + 1)
             nodes.Add(New PathNode With {
                       .h_hueristic = calculateHeuristic(location, endPoint),
